@@ -1,4 +1,5 @@
 const Usuario = require('../models/usuario.model');
+const Conta = require('../models/conta.model');
 
 async function createUsuario(req, res) {
   const {
@@ -36,7 +37,13 @@ async function createUsuario(req, res) {
     }
 
     try {
-        await Usuario.create(usuario)
+        const usuarioSaved = await Usuario.create(usuario)
+
+        const conta = {
+          idMoradorPrincipal: usuarioSaved._id,
+        }
+
+        await Conta.create(conta)
 
         res.status(201).json({message: 'Usuario inserido com sucesso'})
     } catch (error) {

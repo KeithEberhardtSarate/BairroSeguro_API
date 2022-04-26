@@ -4,6 +4,7 @@ const mongoose = require('mongoose')
 const { MongoClient, ServerApiVersion } = require('mongodb');
 
 const usuariosRouter = require('./routes/usuario.router');
+const contasRouter = require('./routes/conta.router');
 
 const app = express();
 
@@ -14,6 +15,7 @@ const PORT = 3000;
 app.use(express.json());
 
 app.use('/usuario', usuariosRouter);
+app.use('/conta', contasRouter);
 
 const DB_USER = 'Keith'
 const DB_PASSWORD = encodeURIComponent('vJ58dGU@88A6R3Y')
