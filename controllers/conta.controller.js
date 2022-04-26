@@ -18,106 +18,50 @@ async function createConta(req, res) {
     }
 }
 
-// async function getUsuarios(req, res) {
-//   try {
-//     const usuario = await Usuario.find()
+async function ativarConta(req, res) {
+  const id = req.params.id
 
-//     res.status(200).json(usuario)
-//   } catch (error) {
-//       res.status(500).json({error: error})
-//   }
-// }
-
-// async function getUsuarioById(req, res) {
-//   const id = req.params.id
-//     try {
-//         const usuario = await Usuario.findOne({_id: id})
-
-//         if(!usuario){
-//             res.status(422).json({message: 'Usuário não encontrado'})
-//             return
-//         }
-
-//         res.status(200).json(usuario)
-//     } catch (error) {
-//         res.status(500).json({error: error})
-//     }
-// }
-
-// async function updateUsuario(req, res) {
-//   const id = req.params.id
-
-//   const {
-//     nome,
-//     email,
-//     telefone,
-//     rua,
-//     numero,
-//     bairro,
-//     cep,
-//     cidade,
-//     estado,
-//     uf,
-//     nomeUsuario,
-//     senha,
-//     foto,
-//     tipo,
-//   } = req.body
-
-//     const usuario = {
-//       nome,
-//       email,
-//       telefone,
-//       rua,
-//       numero,
-//       bairro,
-//       cep,
-//       cidade,
-//       estado,
-//       uf,
-//       nomeUsuario,
-//       senha,
-//       foto,
-//       tipo,
-//     }
+    const conta = {
+      isAtiva: true,
+    }
     
-//     try {
-//         const updatedUsuario = await Usuario.updateOne({_id: id}, usuario)
+    try {
+        const updatedConta = await Conta.updateOne({_id: id}, conta)
 
-//         if(updatedUsuario.matchedCount === 0){
-//             res.status(422).json({message: 'Usuário não encontrado'})
-//             return
-//         }
+        if(updatedConta.matchedCount === 0){
+            res.status(422).json({message: 'Conta ativa com sucesso'})
+            return
+        }
 
-//         res.status(200).json(usuario)
-//     } catch (error) {
-//         res.status(500).json({error: error})
-//     }
-// }
+        res.status(200).json(conta)
+    } catch (error) {
+        res.status(500).json({error: error})
+    }
+}
 
-// async function deleteUsuario(req, res) {
-//   const id = req.params.id
+async function desativarConta(req, res) {
+  const id = req.params.id
 
-//   const usuario = await Usuario.findOne({_id: id})
+    const conta = {
+      isAtiva: false,
+    }
+    
+    try {
+        const updatedConta = await Conta.updateOne({_id: id}, conta)
 
-//   if(!usuario){
-//     res.status(422).json({message: 'Usuário não encontrado'})
-//     return
-//   }
+        if(updatedConta.matchedCount === 0){
+            res.status(422).json({message: 'Conta ativa com sucesso'})
+            return
+        }
 
-//   try {
-//     await Usuario.deleteOne({_id: id})
-
-//     res.status(200).json({message: 'Usuário removido!'})
-//   } catch (error) {
-//     res.status(500).json({error: error})
-//   }
-// }
+        res.status(200).json(conta)
+    } catch (error) {
+        res.status(500).json({error: error})
+    }
+}
 
 module.exports = {
   createConta,
-  // getUsuarios,
-  // getUsuarioById,
-  // updateUsuario,
-  // deleteUsuario,
+  ativarConta,
+  desativarConta,
 };
