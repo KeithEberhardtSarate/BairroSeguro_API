@@ -10,7 +10,7 @@ const app = express();
 
 app.use(bodyParser.json());
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 
@@ -25,7 +25,7 @@ mongoose.connect(
 )
 .then(() => {
     console.log("Conectado ao Mongo DB")
-    app.listen(3000)
+    app.listen(PORT)
 })
 .catch((err) => {
     console.log(err)
