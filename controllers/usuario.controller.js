@@ -22,14 +22,7 @@ async function createUsuario(req, res) {
     const usuario = {
       nome,
       email,
-      telefone,
-      rua,
-      numero,
-      bairro,
-      cep,
-      cidade,
-      estado,
-      uf,
+      telefone,      
       nomeUsuario,
       senha,
       foto,
@@ -41,11 +34,18 @@ async function createUsuario(req, res) {
 
         const conta = {
           idMoradorPrincipal: usuarioSaved._id,
+          rua,
+          numero,
+          bairro,
+          cep,
+          cidade,
+          estado,
+          uf,
         }
 
         await Conta.create(conta)
 
-        res.status(201).json({message: 'Usuario inserido com sucesso'})
+        res.status(201).json({message: 'Usuário inserido com sucesso'})
     } catch (error) {
         res.status(500).json({error: error})
     }
