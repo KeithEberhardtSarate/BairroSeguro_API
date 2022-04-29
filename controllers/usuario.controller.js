@@ -32,18 +32,20 @@ async function createUsuario(req, res) {
     try {
         const usuarioSaved = await Usuario.create(usuario)
 
-        const conta = {
-          idMoradorPrincipal: usuarioSaved._id,
-          rua,
-          numero,
-          bairro,
-          cep,
-          cidade,
-          estado,
-          uf,
-        }
-
-        await Conta.create(conta)
+        if(tipo === 'morador') {
+          const conta = {
+            idMoradorPrincipal: usuarioSaved._id,
+            rua,
+            numero,
+            bairro,
+            cep,
+            cidade,
+            estado,
+            uf,
+          }
+  
+          await Conta.create(conta)
+        }        
 
         res.status(201).json({message: 'Usuário inserido com sucesso'})
     } catch (error) {
