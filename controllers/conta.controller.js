@@ -1,4 +1,5 @@
 const Conta = require('../models/conta.model');
+const Usuario = require('../models/usuario.model');
 
 async function createConta(req, res) {
   const {
@@ -63,6 +64,23 @@ async function desativarConta(req, res) {
 async function getContas(req, res) {
   try {
     const conta = await Conta.find()
+
+    res.status(200).json(conta)
+  } catch (error) {
+      res.status(500).json({error: error})
+  }
+}
+
+async function getContaById(req, res) {
+  const id = req.params.id
+  try {
+    const conta = await Conta.findOne({_id: id})
+
+    if(!conta){
+      res.status(422).json({message: 'Usuário não encontrado'})
+      return
+    }
+    
     const usuarioPrincipalDaConta = await Usuario.findOne({_id: conta.idMoradorPrincipal})
 
     const retorno = {
@@ -85,4 +103,5 @@ module.exports = {
   ativarConta,
   desativarConta,
   getContas,
+  getContaById,
 };
