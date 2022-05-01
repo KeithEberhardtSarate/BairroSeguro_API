@@ -53,7 +53,7 @@ async function createUsuario(req, res) {
         if(tipo === 'morador' && idConta){
           const contaSaved = await Conta.findOne({_id: idConta})
 
-          let idsMoradores = contaOld.idsMoradores
+          let idsMoradores = contaSaved.idsMoradores
           idsMoradores.push(usuarioSaved._id);
           
           const conta = {
@@ -65,6 +65,7 @@ async function createUsuario(req, res) {
 
         res.status(201).json({message: 'Usuário inserido com sucesso'})
     } catch (error) {
+        console.log(error.message);
         res.status(500).json({error: error})
     }
 }
