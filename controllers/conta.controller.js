@@ -60,8 +60,29 @@ async function desativarConta(req, res) {
     }
 }
 
+async function getContas(req, res) {
+  try {
+    const conta = await Conta.find()
+    const usuarioPrincipalDaConta = await Usuario.findOne({_id: conta.idMoradorPrincipal})
+
+    const retorno = {
+      dataCriacao: conta.dataCriacao,
+      isAtiva: conta.isAtiva,
+      cepDaConta: conta.cep,
+      nome: usuarioPrincipalDaConta.nome,
+      email: usuarioPrincipalDaConta.email,
+      telefone: usuarioPrincipalDaConta.telefone
+    }
+
+    res.status(200).json(retorno)
+  } catch (error) {
+      res.status(500).json({error: error})
+  }
+}
+
 module.exports = {
   createConta,
   ativarConta,
   desativarConta,
+  getContas,
 };
