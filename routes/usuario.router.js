@@ -9,6 +9,7 @@ usuariosRouter.use((req, res, next) => {
   next();
 });
 usuariosRouter.post('/', usuariosController.createUsuario);
+usuariosRouter.post('/login', usuariosController.autenticaUsuario);
 usuariosRouter.get('/', usuariosController.getUsuarios);
 usuariosRouter.get('/:id', usuariosController.getUsuarioById);
 usuariosRouter.patch('/:id', usuariosController.updateUsuario);

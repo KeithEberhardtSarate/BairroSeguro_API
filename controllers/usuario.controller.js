@@ -166,10 +166,38 @@ async function deleteUsuario(req, res) {
   }
 }
 
+async function autenticaUsuario(req, res) {
+  const {
+    email,
+    nomeUsuario,
+    senha,
+  } = req.body
+
+    try {
+      const usuario = await Usuario.findOne({email: email})
+
+      if(!usuario){
+        res.status(422).json({isAutenticated: false, message: 'Usuário ou senha inválidos'})
+        return
+      }
+
+      if(usuario.senha === senha){
+        res.status(200).json({isAutenticated: true, message: 'Usuário autenticado'})
+      }else{
+        res.status(422).json({isAutenticated: false, message: 'Usuário ou senha inválidos'})
+        return
+      } 
+    } catch (error) {
+        console.log(error.message);
+        res.status(500).json({error: error})
+    }
+}
+
 module.exports = {
   createUsuario,
   getUsuarios,
   getUsuarioById,
   updateUsuario,
   deleteUsuario,
+  autenticaUsuario,
 };
