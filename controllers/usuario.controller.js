@@ -3,6 +3,7 @@ const Conta = require('../models/conta.model');
 
 async function createUsuario(req, res) {
   const {
+    idConta,
     nome,
     email,
     telefone,
@@ -32,7 +33,8 @@ async function createUsuario(req, res) {
     try {
         const usuarioSaved = await Usuario.create(usuario)
 
-        if(tipo === 'morador') {
+        // Se for um morador e não tiver id da conta, cria uma conta associada ao usuário
+        if(tipo === 'morador' && !idConta) {
           const conta = {
             idMoradorPrincipal: usuarioSaved._id,
             rua,
@@ -45,7 +47,21 @@ async function createUsuario(req, res) {
           }
   
           await Conta.create(conta)
-        }        
+        }
+        
+        // Se for um morador e tiver um id de conta, cadastrar morador secundário para conta
+        if(tipo === 'morador' && idConta){
+          const contaSaved = await Conta.findOne({_id: idConta})
+
+          let idsMoradores = contaOld.idsMoradores
+          idsMoradores.push(usuarioSaved._id);
+          
+          const conta = {
+            idsMoradores
+          }
+          
+          await Conta.updateOne({_id: idConta}, conta)
+        } 
 
         res.status(201).json({message: 'Usuário inserido com sucesso'})
     } catch (error) {
