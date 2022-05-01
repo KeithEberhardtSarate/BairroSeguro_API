@@ -9,6 +9,7 @@ contasRouter.use((req, res, next) => {
   next();
 });
 contasRouter.post('/', contasController.createConta);
+contasRouter.get('/', contasController.getContas);
 contasRouter.patch('/ativar/:id', contasController.ativarConta);
 contasRouter.patch('/desativar/:id', contasController.desativarConta);
 
