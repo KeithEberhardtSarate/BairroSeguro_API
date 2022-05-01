@@ -46,7 +46,13 @@ async function createUsuario(req, res) {
             uf,
           }
   
-          await Conta.create(conta)
+          const createdConta = await Conta.create(conta)
+
+          const usuario = {
+            idConta: createdConta.id,
+          }
+
+          await Usuario.updateOne({_id: usuarioSaved.id}, usuario)
         }
         
         // Se for um morador e tiver um id de conta, cadastrar morador secundário para conta
@@ -61,6 +67,12 @@ async function createUsuario(req, res) {
           }
           
           await Conta.updateOne({_id: idConta}, conta)
+
+          const usuario = {
+            idConta
+          }
+
+          await Usuario.updateOne({_id: usuarioSaved.id}, usuario)
         } 
 
         res.status(201).json({message: 'Usuário inserido com sucesso'})
