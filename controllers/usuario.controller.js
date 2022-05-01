@@ -194,7 +194,12 @@ async function autenticaUsuario(req, res) {
       }
 
       if(usuario.senha === senha){
-        res.status(200).json({isAutenticated: true, message: 'Usuário autenticado'})
+        if(usuario.idConta){
+          const contaSaved = await Conta.findOne({_id: usuario.idConta});
+          res.status(200).json({isAutenticated: true, isContaAtiva: contaSaved.isAtiva, message: 'Usuário autenticado'})
+        }else{
+          res.status(200).json({isAutenticated: true, message: 'Usuário autenticado'})
+        }
       }else{
         res.status(422).json({isAutenticated: false, message: 'Usuário ou senha inválidos'})
         return
