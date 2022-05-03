@@ -6,6 +6,7 @@ const contasRouter = express.Router();
 
 contasRouter.use((req, res, next) => {
   console.log('ip address:', req.ip);
+  res.set('Access-Control-Allow-Origin', '*');
   next();
 });
 contasRouter.post('/', contasController.createConta);
