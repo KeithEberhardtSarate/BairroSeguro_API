@@ -66,13 +66,13 @@ async function getContas(req, res) {
     const retorno = [];
     const contas = await Conta.find()
 
-    if(conta){
-      contas.map(async conta => {
-        let usuarioPrincipalDaConta = await Usuario.findOne({_id: conta.idMoradorPrincipal});
+    if(contas){
+      await Promise.all(contas.map(async conta => {
+        let usuarioPrincipalDaConta = await Usuario.findOne({_id: conta.idMoradorPrincipal})        
 
         retorno.push({
-          _id,
-          idMoradorPrincipal,
+          id: conta._id,
+          idMoradorPrincipal: conta.idMoradorPrincipal,
           dataCriacao: conta.dataCriacao,
           isAtiva: conta.isAtiva,
           cepDaConta: conta.cep,
@@ -80,13 +80,15 @@ async function getContas(req, res) {
           email: usuarioPrincipalDaConta.email,
           telefone: usuarioPrincipalDaConta.telefone,
           qtdUsuarios: conta.idsMoradores.length + 1
-        });
-      });
+        })
+      }))
+
+      
     }
 
     res.status(200).json(retorno)
   } catch (error) {
-      res.status(500).json({error: error})
+    res.status(500).json({error: error})
   }
 }
 
@@ -103,15 +105,15 @@ async function getContaById(req, res) {
     const usuarioPrincipalDaConta = await Usuario.findOne({_id: conta.idMoradorPrincipal})
 
     const retorno = {
-      _id,
-      idMoradorPrincipal,
+      id: conta._id,
+      idMoradorPrincipal: conta.idMoradorPrincipal,
       dataCriacao: conta.dataCriacao,
       isAtiva: conta.isAtiva,
       cepDaConta: conta.cep,
       nome: usuarioPrincipalDaConta.nome,
       email: usuarioPrincipalDaConta.email,
       telefone: usuarioPrincipalDaConta.telefone,
-      qtdUsuarios: conta.idsMoradores.length + 1
+      qtdUsuarios: conta.idsMoradores.length + 1,
     }
 
     res.status(200).json(retorno)
