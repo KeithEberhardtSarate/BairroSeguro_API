@@ -63,9 +63,28 @@ async function desativarConta(req, res) {
 
 async function getContas(req, res) {
   try {
-    const conta = await Conta.find()
+    const retorno = [];
+    const contas = await Conta.find()
 
-    res.status(200).json(conta)
+    if(conta){
+      contas.map(conta => {
+        let usuarioPrincipalDaConta = await Usuario.findOne({_id: conta.idMoradorPrincipal});
+
+        retorno.push({
+          _id,
+          idMoradorPrincipal,
+          dataCriacao: conta.dataCriacao,
+          isAtiva: conta.isAtiva,
+          cepDaConta: conta.cep,
+          nome: usuarioPrincipalDaConta.nome,
+          email: usuarioPrincipalDaConta.email,
+          telefone: usuarioPrincipalDaConta.telefone,
+          qtdUsuarios: conta.idsMoradores.length + 1
+        });
+      });
+    }
+
+    res.status(200).json(retorno)
   } catch (error) {
       res.status(500).json({error: error})
   }
@@ -84,12 +103,15 @@ async function getContaById(req, res) {
     const usuarioPrincipalDaConta = await Usuario.findOne({_id: conta.idMoradorPrincipal})
 
     const retorno = {
+      _id,
+      idMoradorPrincipal,
       dataCriacao: conta.dataCriacao,
       isAtiva: conta.isAtiva,
       cepDaConta: conta.cep,
       nome: usuarioPrincipalDaConta.nome,
       email: usuarioPrincipalDaConta.email,
-      telefone: usuarioPrincipalDaConta.telefone
+      telefone: usuarioPrincipalDaConta.telefone,
+      qtdUsuarios: conta.idsMoradores.length + 1
     }
 
     res.status(200).json(retorno)
