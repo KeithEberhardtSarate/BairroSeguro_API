@@ -67,7 +67,7 @@ async function getContas(req, res) {
     const contas = await Conta.find()
 
     if(conta){
-      contas.map(conta => {
+      contas.forEach(conta => {
         let usuarioPrincipalDaConta = await Usuario.findOne({_id: conta.idMoradorPrincipal});
 
         retorno.push({
