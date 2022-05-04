@@ -6,6 +6,7 @@ const usuariosRouter = express.Router();
 
 usuariosRouter.use((req, res, next) => {
   console.log('ip address:', req.ip);
+  res.set('Access-Control-Allow-Origin', '*');
   next();
 });
 usuariosRouter.post('/', usuariosController.createUsuario);
