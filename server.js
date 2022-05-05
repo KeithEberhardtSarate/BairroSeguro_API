@@ -6,7 +6,10 @@ const { MongoClient, ServerApiVersion } = require('mongodb');
 const usuariosRouter = require('./routes/usuario.router');
 const contasRouter = require('./routes/conta.router');
 
+const cors = require('cors');
 const app = express();
+
+app.use(cors());
 
 app.use(bodyParser.json());
 
