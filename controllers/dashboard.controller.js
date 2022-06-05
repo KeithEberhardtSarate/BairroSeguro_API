@@ -1,4 +1,5 @@
 const Conta = require('../models/conta.model');
+const Usuario = require('../models/usuario.model');
 
 async function getDashboard(req, res) {
   try {
