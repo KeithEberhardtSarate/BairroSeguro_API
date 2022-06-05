@@ -30,10 +30,10 @@ async function createUsuario(req, res) {
 
     try {
 
-        const usuario = await Usuario.findOne({email: email})
+        const usuarioExistente = await Usuario.findOne({email: email})
 
-        if(usuario){
-            res.status(200).json({message: 'Usuário já possui cadastro'})
+        if(usuarioExistente){
+            res.status(200).json({message: 'Usuário já possui cadastro', cadastrado: false})
             return
         }
 
@@ -81,7 +81,7 @@ async function createUsuario(req, res) {
           await Usuario.updateOne({_id: usuarioSaved.id}, usuario)
         } 
 
-        res.status(201).json({message: 'Usuário inserido com sucesso'})
+        res.status(201).json({message: 'Usuário inserido com sucesso', cadastrado: true})
     } catch (error) {
         console.log(error.message);
         res.status(500).json({error: error})
