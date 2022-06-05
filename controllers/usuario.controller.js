@@ -14,7 +14,6 @@ async function createUsuario(req, res) {
     cidade,
     estado,
     uf,
-    nomeUsuario,
     senha,
     foto,
     tipo,
@@ -23,14 +22,21 @@ async function createUsuario(req, res) {
     const usuario = {
       nome,
       email,
-      telefone,      
-      nomeUsuario,
+      telefone,
       senha,
       foto,
       tipo,
     }
 
     try {
+
+        const usuario = await Usuario.findOne({email: email})
+
+        if(usuario){
+            res.status(200).json({message: 'Usuário já possui cadastro'})
+            return
+        }
+
         const usuarioSaved = await Usuario.create(usuario)
 
         // Se for um morador e não tiver id da conta, cria uma conta associada ao usuário
