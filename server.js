@@ -6,6 +6,7 @@ const { MongoClient, ServerApiVersion } = require('mongodb');
 const usuariosRouter = require('./routes/usuario.router');
 const contasRouter = require('./routes/conta.router');
 const dashboardRouter = require('./routes/dashboard.router');
+const solicitacaoRouter = require('./routes/solicitacao.router');
 
 const cors = require('cors');
 const app = express();
@@ -21,6 +22,7 @@ app.use(express.json());
 app.use('/usuario', usuariosRouter);
 app.use('/conta', contasRouter);
 app.use('/dashboard', dashboardRouter);
+app.use('/solicitacao', solicitacaoRouter);
 
 const DB_USER = 'Keith'
 const DB_PASSWORD = encodeURIComponent('vJ58dGU@88A6R3Y')
