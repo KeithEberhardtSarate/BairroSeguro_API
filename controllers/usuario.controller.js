@@ -215,6 +215,7 @@ async function autenticaUsuario(req, res) {
 
           res.status(200).json(retorno)
         }else{
+          retorno.isAutenticated = true;
           retorno.isContaAtiva = null;
           res.status(200).json(retorno)
         }
