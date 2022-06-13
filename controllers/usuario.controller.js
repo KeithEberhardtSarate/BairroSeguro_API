@@ -209,6 +209,7 @@ async function autenticaUsuario(req, res) {
         if(usuario.idConta){
           const contaSaved = await Conta.findOne({_id: usuario.idConta});
 
+          retorno.idConta = contaSaved._id;
           retorno.isAutenticated = true;
           retorno.isContaAtiva = contaSaved.isAtiva;
           retorno.message = 'Usuário autenticado';
