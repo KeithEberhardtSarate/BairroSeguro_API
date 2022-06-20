@@ -20,9 +20,9 @@ async function createSolicitacao(req, res) {
     }
 
     try {
-        await Solicitacao.create(solicitacao)
+        var solicitacaoCreated = await Solicitacao.create(solicitacao)
 
-        res.status(201).json({message: 'Solicitacao inserida com sucesso'})
+        res.status(201).json({solicitacaoCreated})
     } catch (error) {
         res.status(500).json({error: error})
     }
