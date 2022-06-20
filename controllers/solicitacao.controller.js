@@ -22,10 +22,7 @@ async function createSolicitacao(req, res) {
     try {
         const solicitacaoCreated = await Solicitacao.create(solicitacao)
 
-        const retorno = {};
-        retorno._id = solicitacaoCreated._id
-
-        res.status(201).json({retorno})
+        res.status(201).json({_id: solicitacaoCreated._id})
     } catch (error) {
         res.status(500).json({error: error})
     }
