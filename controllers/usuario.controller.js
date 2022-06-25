@@ -200,6 +200,7 @@ async function autenticaUsuario(req, res) {
       }
 
       const retorno = {
+        _id: usuario._id,
         nome: usuario.nome,
         email: usuario.email,
         telefone: usuario.telefone,
