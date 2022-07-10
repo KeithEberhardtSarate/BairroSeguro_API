@@ -1,5 +1,6 @@
 const Usuario = require('../models/usuario.model');
 const Conta = require('../models/conta.model');
+const EndCoords = require('coordenadas-do-cep');
 
 async function createUsuario(req, res) {
   const {
@@ -51,6 +52,11 @@ async function createUsuario(req, res) {
             estado,
             uf,
           }
+
+          const coords = await EndCoords.getByEndereco(conta.uf, conta.cidade, conta.rua, conta.numero);
+
+          conta.lat = coords.lat;
+          conta.lat = coords.lon;
   
           const createdConta = await Conta.create(conta)
 
