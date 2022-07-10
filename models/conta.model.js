@@ -11,6 +11,9 @@ const Conta = mongoose.model('Conta', {
     cidade: String,
     estado: String,
     uf: String,
+    lat: String,
+    lon: String,
+
     isAtiva: { type: Boolean, default: false },
 })
 

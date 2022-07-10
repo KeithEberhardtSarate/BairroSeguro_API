@@ -56,7 +56,7 @@ async function createUsuario(req, res) {
           const coords = await EndCoords.getByEndereco(conta.uf, conta.cidade, conta.rua, conta.numero);
 
           conta.lat = coords.lat;
-          conta.lat = coords.lon;
+          conta.lon = coords.lon;
   
           const createdConta = await Conta.create(conta)
 
