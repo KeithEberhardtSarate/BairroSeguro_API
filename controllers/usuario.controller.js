@@ -220,6 +220,8 @@ async function autenticaUsuario(req, res) {
           retorno.isAutenticated = true;
           retorno.isContaAtiva = contaSaved.isAtiva;
           retorno.message = 'Usuário autenticado';
+          retorno.lat = contaSaved.lat;
+          retorno.lon = contaSaved.lon;
 
           res.status(200).json(retorno)
         }else{
